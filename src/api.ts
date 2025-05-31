@@ -1,4 +1,8 @@
-import axios, { type AxiosError, type AxiosInstance, type AxiosResponse } from "axios";
+import axios, {
+    type AxiosError,
+    type AxiosInstance,
+    type AxiosResponse,
+} from "axios";
 
 //Interfaces
 interface LoginCredentials {
@@ -6,11 +10,9 @@ interface LoginCredentials {
     email: string;
 }
 
-
-
 //Axios inst
 const api: AxiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true,
 });
 
