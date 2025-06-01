@@ -4,6 +4,15 @@ import axios, {
     type AxiosResponse,
 } from "axios";
 
+import {
+    type Dog,
+    type Match,
+    type DogSearchParams,
+    type LocationSearchParams,
+    type LocationSearchResponse,
+    type DogSearchResponse,
+} from "./types";
+
 //Interfaces
 interface LoginCredentials {
     name: string;
@@ -30,6 +39,14 @@ api.interceptors.response.use(
 );
 
 //API methods
+
+const handleError = (error: unknown): never => {
+    if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || error.message);
+    }
+    throw new Error("An unknown error occurred");
+};
+
 export const authApi = {
     login: async (credentials: LoginCredentials): Promise<AxiosResponse> => {
         const { data } = await api.post<AxiosResponse>(
@@ -45,5 +62,57 @@ export const authApi = {
     },
 };
 
-//Raw instance just in case
-export default api;
+export const fetchBreeds = async (): Promise<string[]> => {
+    try {
+        const response = await api.get<string[]>("/dogs/breeds");
+        return response.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const fetchDogs = async (dogIds: string[]): Promise<Dog[]> => {
+    try {
+        const response = await api.post<Dog[]>("/dogs", dogIds);
+        return response.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const fetchMatch = async (dogIds: string[]): Promise<Match> => {
+    try {
+        const response = await api.post<Match>("/dogs/match", dogIds);
+        return response.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const searchLocations = async (
+    params: LocationSearchParams
+): Promise<LocationSearchResponse> => {
+    try {
+        const response = await api.post<LocationSearchResponse>(
+            "/locations/search",
+            params
+        );
+        return response.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const searchDogs = async (
+    params: DogSearchParams
+): Promise<DogSearchResponse> => {
+    try {
+        const response = await api.post<DogSearchResponse>(
+            "/dogs/search",
+            params
+        );
+        return response.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
