@@ -1,4 +1,3 @@
-// app/search/page.tsx
 import { useState, useEffect } from "react";
 import {
     fetchBreeds,
