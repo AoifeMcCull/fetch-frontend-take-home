@@ -3,7 +3,7 @@ import SearchPage from "./components/SearchPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
     return (
-        <Router>
+        <Router basename="/fetch-frontend-take-home">
             <Routes>
                 <Route path="/" element={<LoginForm />} />
                 <Route path="/search" element={<SearchPage />} />
