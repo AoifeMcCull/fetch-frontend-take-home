@@ -10,3 +10,4 @@ For a more permanent project I would use Json Web Tokens due to my familiarity w
 Using a single api file rather than separate auth, dogs, locations folders and files due to the temporary nature of the project + known, static scope of the project.
 
 I implemented a map selection solution with Leaflet, but ended up removing it because it was too buggy.
+![example screenshot showing the search screen](image.png)
