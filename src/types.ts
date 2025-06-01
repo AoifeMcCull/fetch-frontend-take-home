@@ -14,10 +14,22 @@ export interface Location {
     city: string;
     state: string;
     county: string;
+    geoBoundingBox: GeoBoundingBox;
 }
 
 export interface Match {
     match: string;
+}
+
+export interface GeoBoundingBox {
+    top?: number;
+    left?: number;
+    bottom?: number;
+    right?: number;
+    bottom_left?: Coordinates;
+    top_right?: Coordinates;
+    bottom_right?: Coordinates;
+    top_left?: Coordinates;
 }
 
 export interface DogSearchParams {

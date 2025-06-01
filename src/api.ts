@@ -10,6 +10,7 @@ import {
     type DogSearchParams,
     type LocationSearchParams,
     type LocationSearchResponse,
+    type Location,
     type DogSearchResponse,
 } from "./types";
 
@@ -103,16 +104,29 @@ export const searchLocations = async (
     }
 };
 
-export const searchDogs = async (
-    params: DogSearchParams
-): Promise<DogSearchResponse> => {
+export const fetchLocations = async (
+    zipCodes: string[]
+): Promise<Location[]> => {
     try {
-        const response = await api.post<DogSearchResponse>(
-            "/dogs/search",
-            params
-        );
+        const response = await api.post<Location[]>("/locations", zipCodes);
         return response.data;
     } catch (error) {
         throw handleError(error);
     }
+};
+
+export const searchDogs = async (
+    params: DogSearchParams
+): Promise<DogSearchResponse> => {
+    // Convert arrays to comma-separated strings for URL params
+    const processedParams = {
+        ...params,
+        breeds: params.breeds?.join(","),
+        zipCodes: params.zipCodes?.join(","),
+    };
+
+    const response = await api.get<DogSearchResponse>("/dogs/search", {
+        params: processedParams,
+    });
+    return response.data;
 };

@@ -121,10 +121,10 @@ const LoginForm = () => {
                         )}
                         <Button
                             type="submit"
-                            className="w-full"
+                            className="w-full mt-5 bg-violet-600"
                             disabled={isLoading}
                         >
-                            {isLoading ? "Logging in..." : "Login"}
+                            {isLoading ? "Logging in..." : "Log in"}
                         </Button>
                     </form>
                 </CardContent>

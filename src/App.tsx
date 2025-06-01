@@ -1,13 +1,13 @@
 import LoginForm from "./components/LoginForm";
+import SearchPage from "./components/SearchPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<LoginForm />} />
-                {/*<Route path="/search" element={<SearchPage />} /> */}
+                <Route path="/search" element={<SearchPage />} />
             </Routes>
-            <LoginForm></LoginForm>
         </Router>
     );
 }
