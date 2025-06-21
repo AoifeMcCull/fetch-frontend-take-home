@@ -48,6 +48,9 @@ const SearchPage = () => {
 
     // Fetch breeds on mount
     useEffect(() => {
+        console.log(window.location.search);
+        const testURLSearchParams = new URLSearchParams(window.location.search);
+        console.log(testURLSearchParams);
         const loadBreeds = async () => {
             try {
                 const breedList = await fetchBreeds();
@@ -68,7 +71,6 @@ const SearchPage = () => {
                 try {
                     const dogData = await fetchDogs(searchResult.resultIds);
                     setDogs(dogData);
-
                     // Extract unique zip codes for location data
                     const uniqueZipCodes = [
                         ...new Set(dogData.map((dog) => dog.zip_code)),
@@ -100,10 +102,22 @@ const SearchPage = () => {
         loadDogs();
     }, [searchResult.resultIds]);
 
-    //search again when page changes or sort changes
+    //search again and reset to page 1 when page size changes or sort options change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [pageSize, sortOption]);
+
+    //search when the page changes
     useEffect(() => {
         search();
-    }, [currentPage, pageSize, sortOption]);
+    }, [currentPage]);
+
+    /*const appendURLSearchParams = (params) => {
+        console.log(params.zipCodes);
+        const url = new URL(window.location.href)
+        url.searchParams.set('zipCodes', params.zipCodes)
+        history.pushState('/')
+    };*/
 
     const search = async () => {
         setIsLoading(true);
@@ -122,7 +136,7 @@ const SearchPage = () => {
                         : undefined,
                 sort: `${sortOption.field}:${sortOption.direction}`,
             };
-
+            appendURLSearchParams(params);
             const result = await searchDogs(params);
             setSearchResult(result);
         } catch (error) {
